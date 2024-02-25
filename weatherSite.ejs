@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Information</title>
+    <link rel="stylesheet" href="/webStyle.css">
+</head>
+<body>
+
+    <table class="tftable" style="border:1px">
+        <tr>
+            <th>Property</th>
+            <th>Value</th>
+        </tr>
+        <tr>
+            <td>Longitude</td>
+            <td><%=resp.coord.lon%>°</td>
+        </tr>
+        <tr>
+            <td>Latitude</td>
+            <td><%=resp.coord.lat%>°</td>
+        </tr>
+        <tr>
+            <td>Weather</td>
+            <td><%=resp.weather[0].main%></td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td><%=resp.weather[0].description%></td>
+        </tr>
+        <tr>
+            <td>Temperature</td>
+            <td><%= (resp.main.temp - 273.15).toFixed(2) %>°C</td>
+        </tr>
+        <tr>
+            <td>Feels Like</td>
+            <td><%= (resp.main.feels_like - 273.15).toFixed(2) %>°C</td>
+        </tr>
+        <tr>
+            <td>Min Temperature</td>
+            <td><%= (resp.main.temp_min - 273.15).toFixed(2) %>°C</td>
+        </tr>
+        <tr>
+            <td>Max Temperature</td>
+            <td><%= (resp.main.temp_max - 273.15).toFixed(2) %>°C</td>
+        </tr>
+        <tr>
+            <td>Pressure</td>
+            <td><%=resp.main.pressure%> hPa</td>
+        </tr>
+        <tr>
+            <td>Humidity</td>
+            <td><%=resp.main.humidity%>%</td>
+        </tr>
+        <tr>
+            <td>Visibility</td>
+            <td><%=resp.visibility%> meters</td>
+        </tr>
+        <tr>
+            <td>Wind Speed</td>
+            <td><%=resp.wind.speed%> m/s</td>
+        </tr>
+        <tr>
+            <td>Wind Degree</td>
+            <td><%=resp.wind.deg%>°</td>
+        </tr>
+        <tr>
+            <td>Cloudiness</td>
+            <td><%=resp.clouds.all%>%</td>
+        </tr>
+        <tr>
+            <td>Date & Time</td>
+            <td><%=resp.dt%> (Epoch time)</td>
+        </tr>
+        <tr>
+            <td>Country</td>
+            <td><%=resp.sys.country%></td>
+        </tr>
+        <tr>
+            <td>Sunrise</td>
+            <td><%=resp.sys.sunrise%> (Epoch time)</td>
+        </tr>
+        <tr>
+            <td>Sunset</td>
+            <td><%=resp.sys.sunset%> (Epoch time)</td>
+        </tr>
+        <tr>
+            <td>Timezone</td>
+            <td><%=resp.timezone%> seconds (UTC+5:30)</td>
+        </tr>
+        <tr>
+            <td>City ID</td>
+            <td><%=resp.id%></td>
+        </tr>
+        <tr>
+            <td>City Name</td>
+            <td><%=resp.name%></td>
+        </tr>
+        <tr>
+            <td>Response Code</td>
+            <td><%=resp.cod%></td>
+        </tr>
+    </table>
+</body>
+</html>

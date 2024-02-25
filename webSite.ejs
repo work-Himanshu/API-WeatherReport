@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0%;
+        }
+        #details{
+            display: flex;
+            justify-content: center;
+            border: 1px black solid;
+        }
+        form{
+            background-color: white;
+            padding: 10px;
+            border: 1px black solid;
+        }
+        button{
+            background-color: rgb(110, 170, 253);
+            padding: 10px;
+            border: 0;
+        }
+        button:hover{
+            background-color: rgb(78, 141, 228);
+            
+        }
+        a{
+            color: white;
+            text-decoration: none;
+        }
+        .container{
+            display: flex;justify-content: center; align-items: center;height: 50vh;background-color: yellow;
+        }
+        .heading{
+            background-color: black;
+            color: white;
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="heading"><h1>Weather Report</h1></div>
+    <div class="container">
+        <form action="/weather" method="post">
+            <label for="Location"><b>Location: </b></label>
+            <input id="autocomplete" placeholder="Type your Input" name="Location"  type="text"/>
+            <button><a href="./weather">Go</a></button>
+        </form>
+    </div>
+    <div id="details"></div>
+    
+
+    <script>
+        let autocomplete;
+        function initAutocomplete(){
+            autocomplete=new google.maps.places.Autocomplete(
+                document.getElementById("autocomplete"),
+                {
+                    types:["establishment"],
+                    componentRestrictions:{"country":["IN"]},
+                    fields:["place_id","geometry","name"]                    
+                });
+            autocomplete.addListener("place_changed",onPlaceChanged);
+        }
+function onPlaceChanged(){
+    var place = autocomplete.getPlace();
+
+    if(!place.geometry){
+        document.getElementById("autocomplete").placeholder="Enter a place";
+    } else {
+        var latitude = place.geometry.location.lat();
+        var longitude = place.geometry.location.lng();
+        
+        // Send latitude and longitude data to the server
+        fetch('/weather', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ latitude, longitude })
+        })
+
+
+        // Display details on the client side
+        document.getElementById("details").innerHTML = "Name: " + place.name;
+    }
+}
+
+    </script>
+    
+    <!-- If you don't have a key, follow the steps below. -->
+    <!-- Step0: Go to "https://console.cloud.google.com/" -->
+    <!-- Step1: Create your account and set your payments. -->
+    <!-- Step2: Search for "Place API" and "Maps Javascript API" then click on enable API -->
+    <!-- Step3: Now generate the API key and copy the API key and use it in the code -->
+
+
+    <!-- Replace the field (YOUR_API_KEY) with your own API key. -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&loading=async&libraries=places&callback=initAutocomplete" async defer></script>
+
+</body>
+</html>
